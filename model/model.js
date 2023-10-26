@@ -31,7 +31,12 @@ const ImportFile = sequelize.define('import_file', {
     maker: {type: DataTypes.INTEGER},
     data: {type: DataTypes.INTEGER}
 })
-
+const DetailedData = sequelize.define('detailed_data', {
+    id: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
+    name: {type: DataTypes.STRING, allowNull: true},
+    years: {type: DataTypes.INTEGER},
+    edition: {type:DataTypes.STRING}
+})
 
 User.hasMany(ContentData)
 ContentData.belongsTo(User)
@@ -42,8 +47,12 @@ ImportFile.belongsTo(User)
 ImportFile.hasMany(ContentData)
 ContentData.belongsTo(ImportFile)
 
+ContentData.hasMany(DetailedData)
+DetailedData.belongsTo(ContentData)
+
 module.exports ={
     User,
     ContentData,
-    ImportFile
+    ImportFile,
+    DetailedData
 }
