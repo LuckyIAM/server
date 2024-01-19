@@ -159,7 +159,7 @@ class ContentParse{
         return res.json(record)
     }
     async getAllDatas(req, res){
-        let searchExemplear, recordInDB, addRecordToSearch = [], searchWord, findeRecords = 0
+        let searchExemplear, recordInDB, addRecordToSearch = [], searchWord,  searchYear, findeRecords = 0
 
         const {data_search, year} = req.body
 
@@ -173,14 +173,13 @@ class ContentParse{
                 }
                 
             })
-
             searchWord = recordInDB.name_journal
 
             console.log(recordInDB);
             console.log(searchWord.toLowerCase(), data_search);
 
             if(!data_search && year){
-                if(searchWord.toLowerCase().includes(year.toLowerCase())){
+                if(searchWord.includes(year)){
                     addRecordToSearch.push(recordInDB)
                 }
             }
@@ -202,6 +201,9 @@ class ContentParse{
 
         }
         res.json(addRecordToSearch)
+    }
+    async getAll(req, res){
+        
     }
 }
 

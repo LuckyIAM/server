@@ -29,7 +29,7 @@ class LogMatch{
                 let regNume = new RegExp(reg, 'g')
                 console.log(reg, );
                 if(regNume.test(recordInDB.name_journal)){
-                    fs.appendFileSync('./journal_in_Mojaets.txt', `Имя: ${elementSplitCSV}-id: ${recordInDB.id} \n`,'utf-8') //`${elementSplitCSV} ${recordInDB.id} \n`
+                    fs.appendFileSync('./journal_in_Mojaets.txt', `${elementSplitCSV}, `,'utf-8') //`${elementSplitCSV} ${recordInDB.id} \n`
                 }else{
                     fs.appendFileSync('./not_journal_in_Mojaetsk.txt', `Данный журнал не обнаружен в коробках: ${elementSplitCSV}- id: ${recordInDB.id} \n`, 'utf-8')
                 }
@@ -37,6 +37,20 @@ class LogMatch{
             }
         }
         res.json({data: 'All is work!'})
+    }
+    async getCompare(req, res){
+        
+    }
+    getSet(req, res){
+        const dataFromFile = fs.readFileSync('./journal_in_Mojaets.txt', 'utf-8')
+        const namesJournal = new Set(dataFromFile.split('\r\n, '))
+        // console.log(namesJournal);
+        const data = fs.readFileSync('./setJournal.txt', 'utf-8')
+        console.log(data);
+        data.split('\n').foreach(elem => {
+            fs.appendFileSync('./journal_in_Mojaets.txt', `${elem};\n`)
+        })
+        res.json({data: data})
     }
 }
 
